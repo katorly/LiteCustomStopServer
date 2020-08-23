@@ -1,0 +1,58 @@
+#----------------------
+#\LiteCustomStopServer/
+#----------------------
+#插件作者:主世界
+#本插件已免费发布并在Gitee上开源
+
+
+#----------
+#|Settings|
+#----------
+
+#设置输入/lcss stop后多少秒关服
+seconds: 60
+#设置进入关服倒计时后分别在剩余多少秒时再次发送关服公告
+countdown:
+  - 30
+  - 10
+  - 5
+#设置定时关服时间,格式为HH-mm;若不想启用本功能请设为none
+auto-stop-time: '06-00'
+#设置是否在关服公告发出同时显示Title文字
+title-true-or-false: 'true'
+
+
+#----------
+#|Messages|
+#----------
+#可用变量: <seconds>
+#设置插件公告前缀(Title处为了美观,会自动删除空格)
+announcement-prefix: '&8&l[&b&l注意&8&l] '
+#设置插件消息前缀
+plugin-prefix: '&8&l[&b&lLiteCustomStopServer&8&l] '
+
+#关服倒计时公告文字
+shutdown-message: '&7&l服务器将在 <seconds> 秒后关闭!'
+#服务器即将关闭提示
+shutdown-inseconds: '&7&l服务器即将关闭!请注意!'
+#关服倒计时取消公告
+cancel-announce: '&7&l关服倒计时已取消!'
+#已经取消了关服倒计时或当前未进入关服倒计时
+already-cancelled: '&7您已取消关服倒计时或当前未进入关服倒计时!'
+#自动关服时间已到
+time-for-shutdown: '&7自动关服时间已到!'
+#服务器已经进入关服倒计时
+countdown-already: '&7服务器已经进入关服倒计时了!'
+#关服倒计时已取消
+countdown-cancel: '&7服务器关服倒计时已取消!'
+#重载插件配置成功
+reload-success: '&7插件配置重载成功!'
+#插件帮助消息
+help-message:
+  - '---------&8&l[&b&lLiteCustomStopServer&8&l]&7&l插件帮助---------'
+  - '&7指令前缀 /litecustomstopserver 可简写为 /litecstopserver 或 /lcss'
+  - '&7&l/lcss 或 /lcss stop &r&7进入关服倒计时'
+  - '&7&l/lcss cancel &r&7取消关服倒计时'
+  - '&7&l/lcss reload &r&7重载插件配置'
+  - '&7&l/lcss help &r&7查看插件帮助'
+  - '---------&8&l[&b&lLiteCustomStopServer&8&l]&7&l插件帮助---------'

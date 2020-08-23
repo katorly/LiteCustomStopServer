@@ -1,0 +1,12 @@
+name: LiteCustomStopServer
+version: 1.2
+main: com.gmail.zhushijie.litecustomstopserver.LiteCustomStopServer
+authors: [Zhushijie]
+description: A light plugin which can help you close your server in a better way
+commands:
+  litecustomstopserver:
+    description: Use /lcss help instead of /help LiteCustomStopServer!
+    usage: /lcss help
+    aliases: [litestopserver,lcss]
+    permission: litecustomstopserver.use
+    permission-message: You don't have permission to perform this command.
