@@ -1,5 +1,5 @@
 # LiteCustomStopServer
-LiteCustomWelcome插件开源
+LiteCustomStopServer插件开源
 
 [![](https://img.shields.io/badge/license-CC--BY--NC--ND--4.0-green)](http://creativecommons.org/licenses/by-nc-nd/4.0/)
 
