@@ -1,0 +1,2 @@
+# LiteCustomStopServer
+LiteCustomStopServer插件开源
