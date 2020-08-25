@@ -13,10 +13,11 @@ public class PlayerJoin implements Listener {
     public void onLogin(PlayerJoinEvent e) {
         if (LiteCustomStopServer.stopalready) { //服务器进入关服倒计时后若仍有玩家进入则提醒他们服务器即将关闭
             FileConfiguration config = LiteCustomStopServer.INSTANCE.getConfig();
+            FileConfiguration mconfig = LiteCustomStopServer.Messagesconfig.getConfig();
             Player player = e.getPlayer();
-            player.sendMessage(config.getString("announcement-prefix").replace("&","§") + config.getString("shutdown-inseconds").replace("&","§"));
+            player.sendMessage(mconfig.getString("announcement-prefix").replace("&","§") + mconfig.getString("shutdown-inseconds").replace("&","§"));
             if (Objects.equals(config.getString("title-true-or-false"),"true")) { //关服提醒发送的同时是否显示标题文字
-                player.sendTitle(config.getString("announcement-prefix").replace("&","§").replace(" ",""),config.getString("shutdown-inseconds").replace("&","§"), 10, 70, 20);
+                player.sendTitle(mconfig.getString("announcement-prefix").replace("&","§").replace(" ",""),mconfig.getString("shutdown-inseconds").replace("&","§"), 10, 70, 20);
             }
         }
     }

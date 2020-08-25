@@ -16,17 +16,18 @@ public class CommandHandler implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (command.getName().equalsIgnoreCase("litecustomstopserver")) {
             FileConfiguration config = LiteCustomStopServer.INSTANCE.getConfig();
+            FileConfiguration mconfig = LiteCustomStopServer.Messagesconfig.getConfig();
             if (args.length < 1) { //若只输入了个/lcss则执行/lcss stop
                 Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(),"litecustomstopserver stop");
             } else if (Objects.equals(args[0], "stop")) {
                 if (LiteCustomStopServer.stopalready) {
-                    sender.sendMessage(config.getString("plugin-prefix").replace("&","§") + config.getString("countdown-already").replace("&","§"));
+                    sender.sendMessage(mconfig.getString("plugin-prefix").replace("&","§") + mconfig.getString("countdown-already").replace("&","§"));
                 } else {
                     LiteCustomStopServer.stopalready = true;
-                    Bukkit.broadcastMessage(config.getString("announcement-prefix").replace("&","§") + config.getString("shutdown-message").replace("&","§").replace("<seconds>",config.getString("seconds")));
+                    Bukkit.broadcastMessage(mconfig.getString("announcement-prefix").replace("&","§") + mconfig.getString("shutdown-message").replace("&","§").replace("<seconds>",config.getString("seconds")));
                     if (Objects.equals(config.getString("title-true-or-false"),"true")) { //关服公告发送的同时是否显示标题文字
                         for (Player player : Bukkit.getOnlinePlayers()) {
-                            player.sendTitle(config.getString("announcement-prefix").replace("&","§").replace(" ",""),config.getString("shutdown-message").replace("&","§").replace("<seconds>",config.getString("seconds")), 10, 70, 20);
+                            player.sendTitle(mconfig.getString("announcement-prefix").replace("&","§").replace(" ",""),mconfig.getString("shutdown-message").replace("&","§").replace("<seconds>",config.getString("seconds")), 10, 70, 20);
                         }
                     }
                     new BukkitRunnable() {
@@ -40,14 +41,14 @@ public class CommandHandler implements CommandExecutor {
                                     if (countdown == value) {
                                         if (Objects.equals(config.getString("title-true-or-false"),"true")) { //关服公告发送的同时是否显示标题文字
                                             for (Player player : Bukkit.getOnlinePlayers()) {
-                                                player.sendTitle(config.getString("announcement-prefix").replace("&","§").replace(" ",""),config.getString("shutdown-message").replace("&","§").replace("<seconds>",String.valueOf(countdown)), 10, 70, 20);
+                                                player.sendTitle(mconfig.getString("announcement-prefix").replace("&","§").replace(" ",""),mconfig.getString("shutdown-message").replace("&","§").replace("<seconds>",String.valueOf(countdown)), 10, 70, 20);
                                             }
                                         }
-                                        Bukkit.broadcastMessage(config.getString("announcement-prefix").replace("&","§") + config.getString("shutdown-message").replace("&","§").replace("<seconds>",String.valueOf(countdown)));
+                                        Bukkit.broadcastMessage(mconfig.getString("announcement-prefix").replace("&","§") + mconfig.getString("shutdown-message").replace("&","§").replace("<seconds>",String.valueOf(countdown)));
                                     }
                                 });
                                 if (countdown == 0) {
-                                    Bukkit.broadcastMessage(config.getString("prefix") + config.getString("message-shutdown"));
+                                    Bukkit.broadcastMessage(mconfig.getString("prefix") + mconfig.getString("message-shutdown"));
                                     Bukkit.getServer().shutdown();
                                 }
                             } else {
@@ -55,10 +56,10 @@ public class CommandHandler implements CommandExecutor {
                                 LiteCustomStopServer.cancelled = false;
                                 if (Objects.equals(config.getString("title-true-or-false"),"true")) { //关服已取消公告发送的同时是否显示标题文字
                                     for (Player player : Bukkit.getOnlinePlayers()) {
-                                        player.sendTitle(config.getString("announcement-prefix").replace("&","§").replace(" ",""),config.getString("cancel-announce").replace("&","§"), 10, 70, 20);
+                                        player.sendTitle(mconfig.getString("announcement-prefix").replace("&","§").replace(" ",""),mconfig.getString("cancel-announce").replace("&","§"), 10, 70, 20);
                                     }
                                 }
-                                Bukkit.broadcastMessage(config.getString("announcement-prefix").replace("&","§") + config.getString("cancel-announce").replace("&","§"));
+                                Bukkit.broadcastMessage(mconfig.getString("announcement-prefix").replace("&","§") + mconfig.getString("cancel-announce").replace("&","§"));
                                 cancel();
                             }
                         }
@@ -66,18 +67,22 @@ public class CommandHandler implements CommandExecutor {
                 }
             } else if (Objects.equals(args[0], "cancel")) {
                 if (LiteCustomStopServer.cancelled) {
-                    sender.sendMessage(config.getString("plugin-prefix").replace("&","§") + config.getString("already-cancelled").replace("&","§"));
+                    sender.sendMessage(mconfig.getString("plugin-prefix").replace("&","§") + mconfig.getString("already-cancelled").replace("&","§"));
                 } else if (!LiteCustomStopServer.stopalready) {
-                    sender.sendMessage(config.getString("plugin-prefix").replace("&","§") + config.getString("already-cancelled").replace("&","§"));
+                    sender.sendMessage(mconfig.getString("plugin-prefix").replace("&","§") + mconfig.getString("already-cancelled").replace("&","§"));
                 } else {
                     LiteCustomStopServer.cancelled = true;
                 }
             } else if (Objects.equals(args[0], "reload")) {
+                LiteCustomStopServer.INSTANCE.saveDefaultConfig();
                 LiteCustomStopServer.INSTANCE.reloadConfig();
                 LiteCustomStopServer.INSTANCE.saveConfig();
-                sender.sendMessage(config.getString("plugin-prefix").replace("&","§") + config.getString("reload-success").replace("&","§"));
+                LiteCustomStopServer.Messagesconfig.saveDefaultConfig();
+                LiteCustomStopServer.Messagesconfig.reloadConfig();
+                LiteCustomStopServer.Messagesconfig.saveConfig();
+                sender.sendMessage(mconfig.getString("plugin-prefix").replace("&","§") + mconfig.getString("reload-success").replace("&","§"));
             } else if (Objects.equals(args[0], "help")) { //查看插件帮助的指令 lcss help
-                List<String> helpmessage = config.getStringList("help-message");
+                List<String> helpmessage = mconfig.getStringList("help-message");
                 int i = 0;
                 for (int length = helpmessage.size(); i < length; i++) {
                     sender.sendMessage(helpmessage.get(i).replace("&","§"));
